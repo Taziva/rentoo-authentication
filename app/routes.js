@@ -1,4 +1,4 @@
-const user = require('../app/models/user');
+const User = require('../app/models/user');
 
 module.exports = function(app, passport) {
   app.get('/', function(req, res) {
@@ -26,7 +26,7 @@ module.exports = function(app, passport) {
     }));
 
     app.post('/update',isLoggedIn , function(req, res) {
-      user.findById(req.session.passport.user, function(err, user){
+      User.findById(req.session.passport.user, function(err, user){
         if(err)console.log(err);
         if(req.body.newEmail != ""){user.local.email = req.body.newEmail};
         if(req.body.newPassword != ""){user.local.password = user.generateHash(req.body.newPassword)};

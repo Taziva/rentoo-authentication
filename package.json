@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "dependencies": {
     "bcrypt-nodejs": "latest",
@@ -24,5 +24,11 @@
     "passport-twitter": "~1.0.2"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "http": "0.0.0",
+    "mocha": "^3.2.0"
+  }
 }
