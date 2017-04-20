@@ -1,3 +1,5 @@
+const user = require('../app/models/user');
+
 module.exports = function(app, passport) {
   app.get('/', function(req, res) {
         res.render('index.ejs');
@@ -23,9 +25,25 @@ module.exports = function(app, passport) {
         failureFlash : true
     }));
 
+    app.post('/update',isLoggedIn , function(req, res) {
+      user.findById(req.session.passport.user, function(err, user){
+        if(err)console.log(err);
+        if(req.body.newEmail != ""){user.local.email = req.body.newEmail};
+        if(req.body.newPassword != ""){user.local.password = user.generateHash(req.body.newPassword)};
+        user.save(function (err, updatedUser) {
+          if (err) console.log(err)
+          req.login(user, function(err) {
+            if (err) console.log(err)
+            res.redirect('/profile')
+          });
+        });
+      });
+    });
+
     app.get('/profile', isLoggedIn, function(req, res) {
         res.render('profile.ejs', {
-            user : req.user
+            user : req.user,
+            message: req.flash('updateMessage')
         });
     });
 
